@@ -1,0 +1,13 @@
+Checked on 2026-11-07 (command line, JDK 21):
+- Main.java compiles, also with -source 8 -target 8 (language level of Java 8; not compiled against the Java 8 class library).
+- ServiceTest: 24 passed, 0 failed.
+- A data file written by the previous version of the prototype still loads.
+- Not checked: running the Swing window (no display available) and the manual GUI tests.
+
+Checked on 2026-11-09 (Windows 11, JDK 21.0.2, command line):
+- Main.java and ServiceTest.java compile.
+- ServiceTest: 23 passed, 1 failed ("the damaged file is kept as .corrupt, not overwritten").
+  Cause: DataStore.load() leaves the FileInputStream open when the file is not a valid serialized file;
+  Windows will not rename an open file. With the stream closed (separate try-with-resources resource) 24/24 pass.
+- The Swing window was run with demo data; screenshots of all six pages are in docs/screenshots/.
+  Found: Dashboard count cards always show 0 (label name "stat:..." vs lookup key mismatch).
