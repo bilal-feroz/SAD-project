@@ -1,0 +1,26 @@
+@startuml
+start
+:Open application;
+:Load data file;
+if (File damaged?) then (yes)
+ :Keep it as .corrupt and warn the user;
+endif
+:Choose Assessments;
+:Enter course and assessment details;
+:Validate title, date and weight;
+if (Valid?) then (yes)
+ :Save assessment;
+ if (Generate plan?) then (yes)
+  :Target sessions = 5 (Hard), 3 (Medium), 2 (Easy);
+  :Subtract completed and future pending sessions;
+  :List weekdays before the deadline whose slot\nis free and does not overlap a class;
+  :Pick evenly spaced days and add sessions;
+  :Save, then show schedule and warnings;
+ else (no)
+  :Return to assessment list;
+ endif
+else (no)
+ :Show validation message;
+endif
+stop
+@enduml

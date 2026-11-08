@@ -1,0 +1,44 @@
+@startuml
+class Main { +main(args:String[]):void }
+class PlannerFrame {
+ -data:PlannerData
+ -store:DataStore
+ -service:PlannerService
+ -addCourse():void
+ -addAssessment():void
+ -generate():void
+ -complete():void
+ -refresh():void
+ -report():String
+}
+class PlannerService {
+ ~{static} SLOT_HOURS:int[]
+ ~{static} MAX_SESSIONS_PER_DAY:int
+ ~{static} targetSessions(difficulty:String):int
+ ~generate(a:Assessment, now:LocalDateTime):int
+ ~conflicts():List<String>
+}
+class DataStore {
+ ~loadWarning:String
+ ~load():PlannerData
+ ~save(data:PlannerData):void
+}
+class PlannerData
+class Course { ~code:String ~name:String ~instructor:String }
+class Assessment { ~id:String ~course:String ~title:String ~type:String ~difficulty:String ~deadline:LocalDate ~weight:double }
+class StudySession { ~id:String ~assessmentId:String ~course:String ~date:LocalDate ~start:LocalTime ~end:LocalTime ~completed:boolean }
+class ClassMeeting { ~course:String ~day:String ~start:LocalTime ~end:LocalTime }
+Main ..> PlannerFrame
+PlannerFrame --> PlannerService
+PlannerFrame --> DataStore
+PlannerFrame --> PlannerData
+PlannerService ..> PlannerData
+DataStore ..> PlannerData
+PlannerData o-- "0..*" Course
+PlannerData o-- "0..*" Assessment
+PlannerData o-- "0..*" StudySession
+PlannerData o-- "0..*" ClassMeeting
+Course "1" -- "0..*" Assessment : course code
+Assessment "1" -- "0..*" StudySession : assessmentId
+Course "1" -- "0..*" ClassMeeting : course code
+@enduml

@@ -1,0 +1,20 @@
+# Compiled output
+out/
+build/
+dist/
+*.class
+
+# NetBeans / IDE
+nbproject/private/
+.idea/
+*.iml
+.vscode/
+
+# App data (saved in the user's home directory, never commit it)
+*.ser
+*.ser.tmp
+*.ser.corrupt
+
+# OS
+.DS_Store
+Thumbs.db
