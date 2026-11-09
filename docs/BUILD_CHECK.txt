@@ -11,3 +11,9 @@ Checked on 2026-11-09 (Windows 11, JDK 21.0.2, command line):
   Windows will not rename an open file. With the stream closed (separate try-with-resources resource) 24/24 pass.
 - The Swing window was run with demo data; screenshots of all six pages are in docs/screenshots/.
   Found: Dashboard count cards always show 0 (label name "stat:..." vs lookup key mismatch).
+
+Re-checked on 2026-11-09 after fixing both issues above (Windows 11, JDK 21.0.2):
+- ServiceTest: 24 passed, 0 failed.
+- Main.java compiles with --release 8 (Java 8 language level and Java 8 class library).
+- Swing window re-run with demo data: Dashboard cards show 4 courses, 5 assessments, 14 pending, 2 completed.
+  Screenshots in docs/screenshots/ were replaced.
