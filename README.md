@@ -66,6 +66,33 @@ The 24 checks cover study-plan generation, conflict detection and saving/loading
 | ![Assessments](docs/screenshots/03_assessments.png) | ![Reports](docs/screenshots/06_reports.png) |
 | **Courses** | **Class Times** |
 | ![Courses](docs/screenshots/02_courses.png) | ![Class Times](docs/screenshots/05_class_times.png) |
+| **Add Assessment form** | |
+| ![Add Assessment form](docs/screenshots/07_add_assessment_form.png) | |
+
+## UI/UX update (branch `ui-ux-polish`)
+Only the look of the window (`PlannerFrame`) changed; the planning rules and saving did not.
+- Modern theme: dark gradient sidebar with icons and a highlighted current page, page subtitles, today's date,
+  white rounded cards with soft shadows, one font (Segoe UI on Windows, Helvetica Neue on macOS).
+- Dashboard: number cards with icons and short summaries, a completion progress bar, lists of upcoming deadlines
+  (coloured OVERDUE / TODAY / IN 3 DAYS tags), the next study sessions and the scheduling warnings in plain language.
+- Tables: no grid, roomy rows, hover highlight, coloured tags for status, type and difficulty, readable dates
+  ("Mon 9 Nov 2026"), today's sessions and close or overdue deadlines highlighted, past unfinished sessions shown as
+  "Missed", and a friendly message when a table is empty.
+- Forms: rounded fields with placeholders, the cursor starts in the first field, Enter confirms and Escape cancels.
+- Feedback: short confirmation messages ("toasts") after every change, a "saved" indicator in the sidebar, and a
+  confirmation before anything is deleted.
+- Reports page: weekly summary with a progress bar, a workload bar per course and the conflicts list;
+  "Copy as Text" copies the plain-text report.
+- Extras: double-click a session to mark it complete, the Delete key deletes the selected row, the window size fits
+  small laptop screens.
+
+Not changed (so the report, UML diagrams and test plan stay valid):
+- `Main`, `Course`, `Assessment`, `StudySession`, `ClassMeeting`, `PlannerData`, `DataStore` and `PlannerService` are
+  byte-for-byte the same as on `main`; the class diagram's classes, fields and `PlannerFrame` methods all still exist.
+- `uml/`, the report, the SRS, the course brief and `test/` are untouched; all 24 automated tests pass.
+- Button, page and field names, validation messages and the data file are the same, so the user guide and the
+  manual test plan in the report still apply, and data saved by the `main` version loads unchanged.
+- Still one source file, plain Swing and Java 2D, no third-party libraries, Java 8 compatible, ASCII-only source.
 
 ## Status
 Fixed on 2026-11-09:

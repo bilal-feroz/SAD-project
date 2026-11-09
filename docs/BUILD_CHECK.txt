@@ -17,3 +17,12 @@ Re-checked on 2026-11-09 after fixing both issues above (Windows 11, JDK 21.0.2)
 - Main.java compiles with --release 8 (Java 8 language level and Java 8 class library).
 - Swing window re-run with demo data: Dashboard cards show 4 courses, 5 assessments, 14 pending, 2 completed.
   Screenshots in docs/screenshots/ were replaced.
+
+Checked on 2026-11-09, branch ui-ux-polish (UI/UX redesign of PlannerFrame only):
+- Lines 1-293 of Main.java (Main, model classes, DataStore, PlannerService) are identical to main;
+  uml/, the report, the SRS, the course brief and test/ are unchanged.
+- ServiceTest: 24 passed, 0 failed.
+- Main.java compiles with --release 8, and as both UTF-8 and windows-1252 (the source is ASCII-only).
+- Every page, the Add Assessment form, a delete warning, a toast and the 950 x 620 minimum window were rendered
+  with demo data at 125 % display scaling; screenshots in docs/screenshots/ were replaced.
+- Not checked: macOS / Linux look, and the manual GUI test plan (report, Part C Section 3).
