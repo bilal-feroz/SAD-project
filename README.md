@@ -67,12 +67,15 @@ The 24 checks cover study-plan generation, conflict detection and saving/loading
 | **Courses** | **Class Times** |
 | ![Courses](docs/screenshots/02_courses.png) | ![Class Times](docs/screenshots/05_class_times.png) |
 
-## Status — issues found on 2026-11-09 (to fix next)
-- **Dashboard counts always show 0.** The count labels are named `"stat:Courses"` etc. (`Main.java` line 442) but
-  `setStat()` looks for `"Courses"` (line 712), so they are never updated (FR-10).
-- **One automated test fails on Windows (23/24):** "the damaged file is kept as .corrupt". In `DataStore.load()` the
-  `FileInputStream` is not closed when `ObjectInputStream` rejects the file, and Windows cannot rename an open file.
-  Declaring the `FileInputStream` as its own try-with-resources resource makes all 24 pass.
+## Status
+Fixed on 2026-11-09:
+- Dashboard counts always showed 0: `setStat()` looked for label name `"Courses"` while the labels are named
+  `"stat:Courses"` etc. It now looks for `"stat:" + key` (FR-10).
+- Damaged data file was not kept as `.corrupt` on Windows (1 automated test failed): `DataStore.load()` left the
+  `FileInputStream` open when `ObjectInputStream` rejected the file, and Windows cannot rename an open file. The stream
+  is now its own try-with-resources resource. All 24 automated tests pass on Windows.
+
+Still open:
 - Long warnings on the Dashboard are cut off (horizontal scroll) and the sidebar footer text is clipped.
 - `docs/SAD_Analysis_Document_SRS.docx` describes a different design (hours split per day, `AcademicItem`
   subclasses, SQLite/JSON, three tabs) from the implemented one described in the report and the code.
