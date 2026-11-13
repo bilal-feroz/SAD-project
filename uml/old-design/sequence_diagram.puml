@@ -1,0 +1,19 @@
+@startuml
+actor Student
+participant PlannerFrame
+participant PlannerService
+participant PlannerData
+participant DataStore
+Student -> PlannerFrame : click "Generate Study Plan"
+loop for each assessment
+ PlannerFrame -> PlannerService : generate(assessment, now)
+ PlannerService -> PlannerData : read sessions and class meetings
+ PlannerService -> PlannerData : add eligible study sessions
+ PlannerService --> PlannerFrame : number created
+end
+PlannerFrame -> DataStore : save(data)
+DataStore --> PlannerFrame : saved
+PlannerFrame -> PlannerService : conflicts()
+PlannerService --> PlannerFrame : warnings
+PlannerFrame --> Student : show count, schedule and warnings
+@enduml

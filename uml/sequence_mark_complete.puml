@@ -1,0 +1,18 @@
+@startuml
+' Sequence 2 of the final analysis document (section 5.2): marking a daily study block complete.
+title Sequence 2 - Marking a daily study block complete
+actor Student
+participant "UI: MainDashboard" as UI
+participant "Engine: ScheduleEngine" as Engine
+participant "block : StudyBlock" as Block
+participant "parentItem : AcademicItem" as Item
+database "Database: StorageManager" as DB
+
+Student -> UI : tick "Mark Complete"
+UI -> Engine : markBlockComplete(blockId)
+Engine -> Block : markBlockDone()
+Block -> Block : isDone = true
+Block -> Item : take allocatedHours off the remaining hours
+Engine -> DB : updateProgress()
+UI -> UI : refresh overdue and upcoming highlights
+@enduml

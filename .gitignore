@@ -18,3 +18,8 @@ nbproject/private/
 # OS
 .DS_Store
 Thumbs.db
+
+# Planner data file (personal data, created in data/ when the app runs)
+data/
+*.json.tmp
+*.json.corrupt

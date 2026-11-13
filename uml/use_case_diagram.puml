@@ -1,26 +1,21 @@
 @startuml
+' Use case model of the final analysis document (section 5.1).
+title Study Planner System - use cases
 left to right direction
 actor Student
-rectangle "Study Planner and Exam Scheduler" {
- usecase "Manage Courses" as A
- usecase "Manage Assessments" as B
- usecase "Manage Class Times" as F
- usecase "Generate Study Plan" as C
- usecase "Review Conflicts" as D
- usecase "Track Progress" as E
- usecase "View Reports" as G
- usecase "Save / Load Local Data" as H
+rectangle "Study Planner System" {
+  usecase "UC1\nManage courses" as UC1
+  usecase "UC2\nManage academic items" as UC2
+  usecase "UC3\nGenerate schedule" as UC3
+  usecase "UC4\nDetect conflicts" as UC4
+  usecase "UC5\nTrack daily progress" as UC5
+  usecase "UC6\nView workload summary" as UC6
 }
-Student --> A
-Student --> B
-Student --> F
-Student --> C
-Student --> D
-Student --> E
-Student --> G
-A ..> H : <<include>>
-B ..> H : <<include>>
-F ..> H : <<include>>
-C ..> H : <<include>>
-E ..> H : <<include>>
+Student --> UC1
+Student --> UC2
+Student --> UC3
+Student --> UC5
+Student --> UC6
+UC3 ..> UC4 : <<include>>
+note right of UC4 : Run automatically by system
 @enduml

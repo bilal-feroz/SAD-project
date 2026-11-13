@@ -1,19 +1,20 @@
 @startuml
+' Sequence 1 of the final analysis document (section 5.2): task creation and schedule generation.
+title Sequence 1 - Task creation and schedule generation
 actor Student
-participant PlannerFrame
-participant PlannerService
-participant PlannerData
-participant DataStore
-Student -> PlannerFrame : click "Generate Study Plan"
-loop for each assessment
- PlannerFrame -> PlannerService : generate(assessment, now)
- PlannerService -> PlannerData : read sessions and class meetings
- PlannerService -> PlannerData : add eligible study sessions
- PlannerService --> PlannerFrame : number created
-end
-PlannerFrame -> DataStore : save(data)
-DataStore --> PlannerFrame : saved
-PlannerFrame -> PlannerService : conflicts()
-PlannerService --> PlannerFrame : warnings
-PlannerFrame --> Student : show count, schedule and warnings
+participant "UI: MainDashboard" as UI
+participant "Engine: ScheduleEngine" as Engine
+database "Database: StorageManager" as DB
+
+Student -> UI : 1: addAcademicItem(courseCode, title, type, dueDate, estHours)
+UI -> DB : 2: saveItem(item)
+DB --> UI : confirmSaved()
+Student -> UI : 3: requestGenerateSchedule()
+UI -> Engine : 4: generateSchedule(maxDailyHours)
+Engine -> DB : 5: getCoursesAndTasks()
+DB --> Engine : taskList
+Engine -> Engine : 6: divideHoursAcrossDays(today, dueDate)
+Engine -> Engine : 7: detectDateConflicts(taskList, studyBlocks, maxDailyHours)
+Engine --> UI : 8: studyBlocksAndWarnings
+UI -> Student : displayScheduleAndAlerts()
 @enduml

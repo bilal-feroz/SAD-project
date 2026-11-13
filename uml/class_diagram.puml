@@ -1,44 +1,77 @@
 @startuml
-class Main { +main(args:String[]):void }
-class PlannerFrame {
- -data:PlannerData
- -store:DataStore
- -service:PlannerService
- -addCourse():void
- -addAssessment():void
- -generate():void
- -complete():void
- -refresh():void
- -report():String
+' Class diagram of the final analysis document (section 5.3), as implemented in src/studyplanner.
+' Only the attributes and operations named in the document are shown; the code adds getters, setters and helpers.
+title Study Planner and Exam Scheduler - class diagram
+skinparam classAttributeIconSize 0
+hide empty members
+
+class StorageManager <<boundary>> {
+  - dbPathOrJsonFile : String
+  + saveAll(courses : List<Course>) : void
+  + loadAll() : List<Course>
 }
-class PlannerService {
- ~{static} SLOT_HOURS:int[]
- ~{static} MAX_SESSIONS_PER_DAY:int
- ~{static} targetSessions(difficulty:String):int
- ~generate(a:Assessment, now:LocalDateTime):int
- ~conflicts():List<String>
+
+class ScheduleEngine <<control>> {
+  - maxDailyHoursLimit : double
+  + generateDailyBlocks(items : List<AcademicItem>) : List<StudyBlock>
+  + detectConflicts(items : List<AcademicItem>, blocks : List<StudyBlock>) : List<String>
 }
-class DataStore {
- ~loadWarning:String
- ~load():PlannerData
- ~save(data:PlannerData):void
+
+class Course <<entity>> {
+  - courseCode : String
+  - courseName : String
+  - items : List<AcademicItem>
+  + addAcademicItem(item : AcademicItem) : void
+  + getRemainingCourseHours() : double
+  + getCompletedTaskCount() : int
 }
-class PlannerData
-class Course { ~code:String ~name:String ~instructor:String }
-class Assessment { ~id:String ~course:String ~title:String ~type:String ~difficulty:String ~deadline:LocalDate ~weight:double }
-class StudySession { ~id:String ~assessmentId:String ~course:String ~date:LocalDate ~start:LocalTime ~end:LocalTime ~completed:boolean }
-class ClassMeeting { ~course:String ~day:String ~start:LocalTime ~end:LocalTime }
-Main ..> PlannerFrame
-PlannerFrame --> PlannerService
-PlannerFrame --> DataStore
-PlannerFrame --> PlannerData
-PlannerService ..> PlannerData
-DataStore ..> PlannerData
-PlannerData o-- "0..*" Course
-PlannerData o-- "0..*" Assessment
-PlannerData o-- "0..*" StudySession
-PlannerData o-- "0..*" ClassMeeting
-Course "1" -- "0..*" Assessment : course code
-Assessment "1" -- "0..*" StudySession : assessmentId
-Course "1" -- "0..*" ClassMeeting : course code
+
+abstract class AcademicItem <<abstract>> {
+  - id : String
+  - title : String
+  - dueDate : LocalDate
+  - estimatedHours : double
+  - completedHours : double
+  - isCompleted : boolean
+  + getRemainingHours() : double
+  + calculateDailyHours(today : LocalDate) : double
+  + markCompleted() : void
+  + {abstract} getItemCategory() : String
+}
+
+class Assignment {
+  - complexityLevel : int
+  + getItemCategory() : String
+  + calculateDailyHours(today : LocalDate) : double
+}
+
+class Quiz {
+  - chapterNumber : int
+  + getItemCategory() : String
+  + calculateDailyHours(today : LocalDate) : double
+}
+
+class Exam {
+  - examDurationMinutes : int
+  - weightPercentage : double
+  + getItemCategory() : String
+  + calculateDailyHours(today : LocalDate) : double
+}
+
+class StudyBlock <<entity>> {
+  - blockId : String
+  - assignedDate : LocalDate
+  - allocatedHours : double
+  - isDone : boolean
+  - parentItem : AcademicItem
+  + markBlockDone() : void
+}
+
+StorageManager ..> Course : loads / saves
+ScheduleEngine ..> StudyBlock : creates
+Course "1" *-- "*" AcademicItem
+AcademicItem "1" -- "*" StudyBlock
+AcademicItem <|-- Assignment
+AcademicItem <|-- Quiz
+AcademicItem <|-- Exam
 @enduml

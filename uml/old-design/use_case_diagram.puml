@@ -1,0 +1,26 @@
+@startuml
+left to right direction
+actor Student
+rectangle "Study Planner and Exam Scheduler" {
+ usecase "Manage Courses" as A
+ usecase "Manage Assessments" as B
+ usecase "Manage Class Times" as F
+ usecase "Generate Study Plan" as C
+ usecase "Review Conflicts" as D
+ usecase "Track Progress" as E
+ usecase "View Reports" as G
+ usecase "Save / Load Local Data" as H
+}
+Student --> A
+Student --> B
+Student --> F
+Student --> C
+Student --> D
+Student --> E
+Student --> G
+A ..> H : <<include>>
+B ..> H : <<include>>
+F ..> H : <<include>>
+C ..> H : <<include>>
+E ..> H : <<include>>
+@enduml

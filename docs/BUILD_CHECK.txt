@@ -26,3 +26,12 @@ Checked on 2026-11-09, branch ui-ux-polish (UI/UX redesign of PlannerFrame only)
 - Every page, the Add Assessment form, a delete warning, a toast and the 950 x 620 minimum window were rendered
   with demo data at 125 % display scaling; screenshots in docs/screenshots/ were replaced.
 - Not checked: macOS / Linux look, and the manual GUI test plan (report, Part C Section 3).
+
+Checked on 2026-11-13, branch final-design (program rebuilt to the final analysis document):
+- New packages studyplanner.model / engine / storage / ui; data saved as JSON in data/study-planner.json.
+- Compiles with --release 17 and -Xlint:all with no warnings; source is ASCII-only (also compiles as windows-1252).
+- PlannerTest: 47 passed, 0 failed (planning, conflicts, progress, validation, JSON save/load, damaged file,
+  100 items planned + checked + saved in about 0.1 s).
+- All three tabs, the due date picker, the Edit form, a toast and the smallest window were rendered with demo data
+  at 125 % display scaling; screenshots in docs/screenshots/ were replaced.
+- Not checked: macOS / Linux look; manual test pass in NetBeans.
