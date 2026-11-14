@@ -1,4 +1,4 @@
-# Study Planner and Exam Scheduler — OOAD Fall 2026 
+# Study Planner and Exam Scheduler — OOAD Fall 2026
 
 ## Group
 - Ahmed Khaled — 202310947
