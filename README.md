@@ -110,4 +110,4 @@ docs/                      final analysis document, earlier report and SRS draft
 - Implemented: everything in the final analysis document (FR1-FR5, UC1-UC6, the three tabs of section 5.4).
 - `docs/Study_Planner_OOAD_Report.docx` (design document, final report, user guide, test plan) and
   `docs/SAD_Analysis_Document_SRS.docx` still describe the earlier slot-based design and need updating to match.
-- Not checked yet: the look on macOS and Linux, and a manual test pass in NetBeans by the group.
+- Not checked yet: the look on macOS/Linux, and a manual test pass in NetBeans by the group.
