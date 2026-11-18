@@ -9,7 +9,7 @@
 Instructor: Dr. Yazeed Ghadi
 
 The program follows the **final analysis document**:
-[`docs/FINAL VER Study Planner and Exam Scheduler Analysis Document .docx`](docs/)
+[`docs/updated Study Planner and Exam Scheduler Analysis Document .docx`](docs/)
 
 ## What it does
 - **Courses and tasks (FR1, UC1, UC2)** — add, view, edit and delete courses (code and title) and their
